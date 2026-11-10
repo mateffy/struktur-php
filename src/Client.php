@@ -361,6 +361,10 @@ class Client
             $parts[] = '--prefill-images';
             $parts[] = (string) $request->prefillImages;
         }
+        if ($request->maxImageViews !== null) {
+            $parts[] = '--max-image-views';
+            $parts[] = (string) $request->maxImageViews;
+        }
         if ($input->path !== null) {
             $parts[] = '--input';
             $parts[] = $input->path;

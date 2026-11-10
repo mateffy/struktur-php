@@ -40,6 +40,11 @@ final readonly class ExtractionRequest
          * Invalid values (wrong type, out-of-enum, …) are always rejected either way.
          */
         public bool $strict = false,
+        /**
+         * Maximum single images (not image overviews) the agent may open with
+         * view_image. Further calls are refused. Agent strategy only; unlimited when null.
+         */
+        public ?int $maxImageViews = null,
     ) {
         if (count($inputs) !== 1) {
             throw new \InvalidArgumentException('Exactly 1 input is required (multi-input not yet supported)');
