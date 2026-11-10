@@ -396,6 +396,41 @@ describe('Client', function () {
             expect($cmd)->not->toContain("'--prefill-images'");
         });
 
+        it('passes the single image view limit when provided', function () {
+            $client = new Client(binaryPath: 'struktur');
+            $request = new Dto\ExtractionRequest(
+                inputs: [Input::fromBytes('x')],
+                schema: [],
+                maxImageViews: 8,
+            );
+            $cmd = invokePrivateMethod($client, 'buildExtractCommand', [$request]);
+
+            expect($cmd)->toContain("'--max-image-views' '8'");
+        });
+
+        it('passes a single image view limit of zero', function () {
+            $client = new Client(binaryPath: 'struktur');
+            $request = new Dto\ExtractionRequest(
+                inputs: [Input::fromBytes('x')],
+                schema: [],
+                maxImageViews: 0,
+            );
+            $cmd = invokePrivateMethod($client, 'buildExtractCommand', [$request]);
+
+            expect($cmd)->toContain("'--max-image-views' '0'");
+        });
+
+        it('omits the single image view limit when null', function () {
+            $client = new Client(binaryPath: 'struktur');
+            $request = new Dto\ExtractionRequest(
+                inputs: [Input::fromBytes('x')],
+                schema: [],
+            );
+            $cmd = invokePrivateMethod($client, 'buildExtractCommand', [$request]);
+
+            expect($cmd)->not->toContain("'--max-image-views'");
+        });
+
         it('passes --strict when requested', function () {
             $client = new Client(binaryPath: 'struktur');
             $request = new Dto\ExtractionRequest(
